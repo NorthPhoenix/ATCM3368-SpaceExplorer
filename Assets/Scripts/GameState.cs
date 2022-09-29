@@ -11,6 +11,7 @@ public class GameState : MonoBehaviour
 
     [SerializeField] AudioClip _themeMelodyIntro;
     [SerializeField] AudioClip _themeMelodyLoop;
+    [SerializeField] float _volume = 0.05f;
 
     private void Awake()
     {
@@ -18,7 +19,7 @@ public class GameState : MonoBehaviour
         _UITint.SetActive(false);
         if (_themeMelodyIntro != null && _themeMelodyLoop != null)
         {
-            AudioHelper.PlayBGMWithIntro(_themeMelodyIntro, _themeMelodyLoop, 0.2f);
+            AudioHelper.PlayBGMWithIntro(_themeMelodyIntro, _themeMelodyLoop, _volume);
         }
     }
 

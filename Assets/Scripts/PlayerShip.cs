@@ -7,23 +7,45 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerShip : MonoBehaviour
 {
+    [Header("Movement")]
     [SerializeField] float _moveSpeed = 12f;
     [SerializeField] float _turnSpeed = 3f;
+    [Space(20)]
 
+    [Header("Dash")]
+    [SerializeField] float _dashStrength = 1000f;
+    [SerializeField] TrailRenderer _dashTrail;
+    [SerializeField] float _dashTrailDuration = 0.3f;
+    [SerializeField] AudioClip _dashClip;
+    [SerializeField] float _dashVolume = 0.5f;
+    [Space(20)]
+
+    [Header("Victory")]
     [SerializeField] string _victoryMsg;
+    [SerializeField] AudioClip _winClip;
+    [SerializeField] float _winVolume = 0.5f;
+    [Space(20)]
+
+    [Header("Death")]
     [SerializeField] string _deathMsg;
+    [SerializeField] AudioClip _deathClip;
+    [SerializeField] float _deathVolume = 0.5f;
+    [Space(20)]
 
+    [Header("Booster")]
     [SerializeField] GameObject _boosters;
+    [Space(20)]
 
-    Rigidbody _rb = null;
-    GameObject _gameController = null;
-
-    public bool _gunEnabled { get; set; } = false;
+    [Header("Gun")]
     [SerializeField] ParticleSystem _gunPowerUpParticles;
     [SerializeField] GameObject _bulletPrefab;
     [SerializeField] float _bulletSpeed = 70f;
     [SerializeField] AudioClip _gunSound;
     [SerializeField] float _gunSoundVolume = 0.5f;
+
+    public bool _gunEnabled { get; set; } = false;
+    Rigidbody _rb = null;
+    GameObject _gameController = null;
 
     private void Awake()
     {
@@ -40,6 +62,14 @@ public class PlayerShip : MonoBehaviour
         if (_gunEnabled && Input.GetKeyDown(KeyCode.Space))
         {
             Shoot();
+        }
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            Dash(-transform.right);
+        }
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            Dash(transform.right);
         }
     }
 
@@ -63,10 +93,31 @@ public class PlayerShip : MonoBehaviour
         Quaternion turnOffset = Quaternion.Euler(0, turnAmountThisFrame, 0);
         _rb.MoveRotation(_rb.rotation * turnOffset);
     }
+    
+    private void Dash(Vector3 direction)
+    {
+        _rb.AddForce(direction * _dashStrength);
+        if (_dashClip != null)
+        {
+            AudioHelper.PlayClip2D(_dashClip, _dashVolume);
+        }
+        StartCoroutine(RenderDashTrail());
+    }
+
+    private IEnumerator RenderDashTrail()
+    {
+        _dashTrail.emitting = true;
+        yield return new WaitForSeconds(_dashTrailDuration);
+        _dashTrail.emitting = false;
+    }
 
     public void Kill()
     {
         Debug.Log("Player has been killed!");
+        if (_deathClip != null)
+        {
+            AudioHelper.PlayClip2D(_deathClip, _deathVolume);
+        }
         this.gameObject.SetActive(false);
         if (_gameController)
         {
@@ -78,6 +129,10 @@ public class PlayerShip : MonoBehaviour
     public void Win()
     {
         Debug.Log("Player has won!");
+        if (_winClip != null)
+        {
+            AudioHelper.PlayClip2D(_winClip, _winVolume);
+        }
         this.gameObject.SetActive(false);
         if (_gameController)
         {

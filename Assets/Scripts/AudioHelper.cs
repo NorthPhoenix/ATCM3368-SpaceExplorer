@@ -49,8 +49,8 @@ public static class AudioHelper
 
         BGM = mainObject;
 
-        introSource.Play();
         mainSource.PlayDelayed(introClip.length);
+        introSource.Play();
         Object.Destroy(intoObject, introClip.length);
         return BGM;
     }

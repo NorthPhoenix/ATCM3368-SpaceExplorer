@@ -142,7 +142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b91a7097a8b4d14fb39e4db77a59498, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _powerUpDuration: 3
+  _powerUpDuration: 10
   _artToDisable: {fileID: 7460505443177901421}
   _collectParticlePrefab: {fileID: 7673089132002191651, guid: 82fa4479988674541a0fa4a3aff4e47b,
     type: 3}

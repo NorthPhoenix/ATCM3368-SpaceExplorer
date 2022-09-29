@@ -143,11 +143,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speedIncreaseAmount: 20
-  _powerUpDuration: 3
+  _powerUpDuration: 7
   _artToDisable: {fileID: 3951080636910574967}
   _collectParticlePrefab: {fileID: 7673089132002191651, guid: 133b4b9c4405808468e08e8c4a8704c8,
     type: 3}
-  _clipToPlay: {fileID: 8300000, guid: 0dc56fb09e0c44046b6adebb7303583c, type: 3}
+  _activationClip: {fileID: 8300000, guid: 0dc56fb09e0c44046b6adebb7303583c, type: 3}
+  _deactivationClip: {fileID: 8300000, guid: 013e22db4d1f2b645830f6fe169c9443, type: 3}
   _volume: 0.5
 --- !u!1 &3951080636910574967
 GameObject:

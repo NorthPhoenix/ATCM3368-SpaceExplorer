@@ -13,7 +13,8 @@ public class SpeedPowerup : MonoBehaviour
 
     [SerializeField] ParticleSystem _collectParticlePrefab;
 
-    [SerializeField] AudioClip _clipToPlay;
+    [SerializeField] AudioClip _activationClip;
+    [SerializeField] AudioClip _deactivationClip;
     [SerializeField] float _volume = .5f;
 
     Collider _colider = null;
@@ -50,9 +51,9 @@ public class SpeedPowerup : MonoBehaviour
     {
         playerShip.SetMoveSpeed(_speedIncreaseAmount);
         playerShip.SetBoosters(true);
-        if (_clipToPlay != null)
+        if (_activationClip != null)
         {
-            AudioHelper.PlayClip2D(_clipToPlay, _volume);
+            AudioHelper.PlayClip2D(_activationClip, _volume);
         }
         if (_collectParticlePrefab != null)
         {
@@ -64,5 +65,9 @@ public class SpeedPowerup : MonoBehaviour
     {
         playerShip.SetMoveSpeed(-_speedIncreaseAmount);
         playerShip.SetBoosters(false);
+        if (_deactivationClip != null)
+        {
+            AudioHelper.PlayClip2D(_deactivationClip, _volume);
+        }
     }
 }
